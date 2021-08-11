@@ -1,0 +1,29 @@
+mode: "debug"
+
+log:
+  # 日志级别(1:fatal 2:error,3:warn,4:info,5:debug,6:trace)
+  #level: "info"
+  enableHook: true
+  reportCaller: true
+  hook: "database"
+  database:
+    type: "mysql"
+    host: "127.0.0.1:3306"
+    name: "hzq"
+    username: "root"
+    password: ""
+    maxIdle: 1
+    maxOpen: 1
+    table: "logger"
+
+server:
+  host: "127.0.0.1"
+  port: ":80"
+
+database:
+  host: "127.0.0.1:3306"
+  name: "hzq"
+  username: "root"
+  password: ""
+  maxIdle: 8
+  maxOpen: 8
