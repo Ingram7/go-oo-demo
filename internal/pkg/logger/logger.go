@@ -20,6 +20,13 @@ const (
 	TagKey     = "tag"
 	VersionKey = "version"
 	StackKey   = "stack"
+
+	RequestBodyKey = "request_body_key"
+	ResponseBodyKey = "response_body_key"
+
+	PathKey = "path"
+	IPKey = "ip"
+	TimeConsumeKey = "time_consume"
 )
 
 type (

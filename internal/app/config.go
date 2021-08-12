@@ -2,7 +2,7 @@ package app
 
 import (
 	"fmt"
-	"go-oo-demo/pkg/config"
+	"go-oo-demo/internal/pkg/config"
 	"log"
 	"path/filepath"
 )

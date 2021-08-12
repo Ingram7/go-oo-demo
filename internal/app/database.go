@@ -1,7 +1,7 @@
 package app
 
 import (
-	"go-oo-demo/pkg/orm"
+	"go-oo-demo/internal/pkg/orm"
 	"gorm.io/gorm"
 )
 

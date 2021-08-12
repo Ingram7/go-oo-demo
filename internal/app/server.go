@@ -4,7 +4,8 @@ import (
 	"context"
 	"github.com/gin-gonic/gin"
 	"go-oo-demo/interfaces/route"
-	"go-oo-demo/pkg/logger"
+	"go-oo-demo/interfaces/route/middleware"
+	"go-oo-demo/internal/pkg/logger"
 	"gorm.io/gorm"
 	"net/http"
 	"time"
@@ -16,15 +17,22 @@ type Server struct {
 	core *http.Server
 }
 
-func newServer(config *ServerConfig, db *gorm.DB, mode string) *Server {
+func newServer(config *ServerConfig, db *gorm.DB, mode *Mode) *Server {
 	server := new(Server)
 	server.config = config
 
-	gin.SetMode(mode)
+	gin.SetMode(mode.String())
 	srv := gin.New()
+	if mode.IsDebug() {
+		srv.Use(gin.Logger())
+	}
+	srv.Use(middleware.CopyRequestBody)
+	srv.Use(middleware.Logger)
+
 	router := route.New(srv, db)
 	router.Init()
 
+	server.handler = srv
 	return server
 }
 

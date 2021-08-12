@@ -1,6 +1,6 @@
 package app
 
-import log "go-oo-demo/pkg/logger"
+import log "go-oo-demo/internal/pkg/logger"
 
 type Logger struct {
 	config *LogConfig

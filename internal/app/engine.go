@@ -2,7 +2,7 @@ package app
 
 import (
 	"context"
-	"go-oo-demo/pkg/logger"
+	"go-oo-demo/internal/pkg/logger"
 	"os"
 	"os/signal"
 	"syscall"
@@ -56,7 +56,7 @@ func (engine *Engine) run(ctx context.Context) error {
 	signal.Notify(sc, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
 
 
-	srv := newServer(engine.config.serverConfig(), engine.db.db(), engine.config.mode())
+	srv := newServer(engine.config.serverConfig(), engine.db.db(), engine.mode)
 	srv.run(ctx)
 
 EXIT:

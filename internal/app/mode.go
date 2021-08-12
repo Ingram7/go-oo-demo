@@ -27,3 +27,7 @@ func (m *Mode) IsRelease() bool {
 func (m *Mode) IsTest() bool {
 	return m.val == TestMode
 }
+
+func (m *Mode) String() string {
+	return m.val
+}

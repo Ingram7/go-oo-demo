@@ -1,9 +1,10 @@
 package logger
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/sirupsen/logrus"
-	"go-oo-demo/pkg/orm"
+	"go-oo-demo/internal/pkg/orm"
 	"time"
 )
 
@@ -42,6 +43,23 @@ func (hook *HookMysql) Fire(entry *logrus.Entry) error {
 		delete(data, VersionKey)
 	}
 
+	if v, ok := data[PathKey]; ok {
+		logger.Path, _ = v.(string)
+	}
+
+	if v, ok := data[IPKey]; ok {
+		logger.IP, _ = v.(string)
+	}
+
+	if v, ok := data[TimeConsumeKey]; ok {
+		logger.TimeConsume, _ = v.(int)
+	}
+
+	if len(data) > 0 {
+		b, _ := json.Marshal(data)
+		logger.Data = string(b)
+	}
+
 	return hook.orm.DB.Save(logger).Error
 }
 
@@ -57,9 +75,12 @@ type Logger struct {
 	Id         int
 	Level      string
 	TraceId    string
-	UserId     string
+	UserId     int
 	Tag        string
 	Version    string
+	Path    string
+	IP    string
+	TimeConsume    int
 	Message    string
 	Data       string
 	File       string
