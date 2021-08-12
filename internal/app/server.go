@@ -26,6 +26,7 @@ func newServer(config *ServerConfig, db *gorm.DB, mode *Mode) *Server {
 	if mode.IsDebug() {
 		srv.Use(gin.Logger())
 	}
+	srv.Use(middleware.TraceMiddleware)
 	srv.Use(middleware.CopyRequestBody)
 	srv.Use(middleware.Logger)
 

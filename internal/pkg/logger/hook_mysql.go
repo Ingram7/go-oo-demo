@@ -38,6 +38,12 @@ func (hook *HookMysql) Fire(entry *logrus.Entry) error {
 		logger.Tag, _ = v.(string)
 		delete(data, TagKey)
 	}
+
+	if v, ok := data[TraceIdKey]; ok {
+		logger.TraceId, _ = v.(string)
+		delete(data, TraceIdKey)
+	}
+
 	if v, ok := data[VersionKey]; ok {
 		logger.Version, _ = v.(string)
 		delete(data, VersionKey)

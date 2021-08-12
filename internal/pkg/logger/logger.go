@@ -15,8 +15,8 @@ var (
 )
 
 const (
-	TraceIDKey = "trace_id"
-	UserIDKey  = "user_id"
+	TraceIdKey = "trace_id"
+	UserIdKey  = "user_id"
 	TagKey     = "tag"
 	VersionKey = "version"
 	StackKey   = "stack"
@@ -50,9 +50,20 @@ func init() {
 	logrus.SetOutput(ioutil.Discard)
 }
 
-// NewTraceIDContext 创建跟踪ID上下文
+// NewTraceIdContext 创建跟踪ID上下文
 func NewTraceIdContext(ctx context.Context, traceId string) context.Context {
 	return context.WithValue(ctx, traceIDKey{}, traceId)
+}
+
+// FromTraceIdContext 从上下文中获取跟踪ID
+func FromTraceIdContext(ctx context.Context) string {
+	v := ctx.Value(traceIDKey{})
+	if v != nil {
+		if s, ok := v.(string); ok {
+			return s
+		}
+	}
+	return ""
 }
 
 // NewTagContext 创建Tag上下文
@@ -80,10 +91,10 @@ func WithContext(ctx context.Context) *logrus.Entry {
 		VersionKey: version,
 	}
 
-	//if v := FromTraceIDContext(ctx); v != "" {
-	//	fields[TraceIDKey] = v
-	//}
-	//
+	if v := FromTraceIdContext(ctx); v != "" {
+		fields[TraceIdKey] = v
+	}
+
 	//if v := FromUserIDContext(ctx); v != "" {
 	//	fields[UserIDKey] = v
 	//}
